@@ -231,3 +231,51 @@ for(let i = 0; i < 40; i++){
   particles.appendChild(span);
 
 }
+
+const form = document.getElementById("contact-form");
+
+form.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  try {
+
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbwOntP9unmUDYzDeE94i6TLJSecwrhr2g1XS7O8vY5nm8Wkf0cuzawlAHk1HeQpUtUD_g/exec",
+      {
+
+        method: "POST",
+
+        body: formData
+
+      }
+    );
+
+    const result = await response.text();
+
+    console.log(result);
+
+    if(result === "OK"){
+
+      alert("Mensagem enviada com sucesso!");
+
+      form.reset();
+
+    }else{
+
+     console.error(result);
+      alert("Erro ao enviar.");
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Erro ao enviar formulário.");
+
+  }
+
+});

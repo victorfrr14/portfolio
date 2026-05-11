@@ -327,17 +327,33 @@
       <h2>Vamos Conversar</h2>
     </div>
 
-    <form class="contact-form reveal">
+    <form class="contact-form reveal" id="contact-form">
 
-      <input type="text" placeholder="Seu Nome">
-      <input type="email" placeholder="Seu Email">
-      <textarea placeholder="Sua Mensagem"></textarea>
+  <input
+    type="text"
+    name="nome"
+    placeholder="Seu Nome"
+    required
+  >
 
-      <button class="btn primary">
-        Enviar
-      </button>
+  <input
+    type="email"
+    name="email"
+    placeholder="Seu Email"
+    required
+  >
 
-    </form>
+  <textarea
+    name="mensagem"
+    placeholder="Sua Mensagem"
+    required
+  ></textarea>
+
+  <button class="btn primary" type="submit">
+    Enviar Mensagem
+  </button>
+
+</form>
 
     <div class="socials reveal">
 
