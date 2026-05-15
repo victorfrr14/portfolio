@@ -176,33 +176,49 @@ counters.forEach(counter => {
 });
 
 // MODAL
-const modal = document.querySelector(".modal");
-const openBtns = document.querySelectorAll(".open-modal");
-const closeBtn = document.querySelector(".close-modal");
+const modal=document.querySelector(".modal");
 
-openBtns.forEach(btn => {
+const modalTitle=
+document.getElementById("modal-title");
 
-  btn.addEventListener("click", () => {
+const modalDescription=
+document.getElementById("modal-description");
 
-    modal.style.display = "flex";
+document
+.querySelectorAll(".open-modal")
 
-  });
+.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+modalTitle.textContent=
+button.dataset.title;
+
+modalDescription.textContent=
+button.dataset.description;
+
+modal.style.display="flex";
 
 });
 
-closeBtn.addEventListener("click", () => {
+});
 
-  modal.style.display = "none";
+document
+.querySelector(".close-modal")
+
+.addEventListener("click",()=>{
+
+modal.style.display="none";
 
 });
 
-window.addEventListener("click", (e) => {
+window.addEventListener("click",(e)=>{
 
-  if(e.target === modal){
+if(e.target===modal){
 
-    modal.style.display = "none";
+modal.style.display="none";
 
-  }
+}
 
 });
 
@@ -233,49 +249,83 @@ for(let i = 0; i < 40; i++){
 }
 
 const form = document.getElementById("contact-form");
+const submitBtn = document.getElementById("submit-btn");
 
 form.addEventListener("submit", async (e) => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const formData = new FormData(form);
+    submitBtn.innerHTML = "Processando dados...";
+    submitBtn.disabled = true;
 
-  try {
+    const formData = new FormData(form);
 
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwOntP9unmUDYzDeE94i6TLJSecwrhr2g1XS7O8vY5nm8Wkf0cuzawlAHk1HeQpUtUD_g/exec",
-      {
+    try {
 
-        method: "POST",
+        const response = await fetch(
+          "https://script.google.com/macros/s/AKfycbwOntP9unmUDYzDeE94i6TLJSecwrhr2g1XS7O8vY5nm8Wkf0cuzawlAHk1HeQpUtUD_g/exec",
+          {
+            method: "POST",
+            body: formData
+          }
+        );
 
-        body: formData
+        const result = await response.text();
 
-      }
-    );
+        console.log(result);
 
-    const result = await response.text();
+        if (result === "OK") {
 
-    console.log(result);
+            submitBtn.innerHTML = "Enviado";
 
-    if(result === "OK"){
+            setTimeout(() => {
 
-      alert("Mensagem enviada com sucesso!");
+                alert("Mensagem enviada com sucesso!");
 
-      form.reset();
+                form.reset();
 
-    }else{
+                submitBtn.innerHTML = "Enviar Mensagem";
+                submitBtn.disabled = false;
 
-     console.error(result);
-      alert("Erro ao enviar.");
+            }, 1000);
+
+        } else {
+
+            console.error(result);
+
+            submitBtn.innerHTML = "Erro";
+
+            setTimeout(() => {
+
+                submitBtn.innerHTML = "Enviar Mensagem";
+                submitBtn.disabled = false;
+
+            }, 1500);
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        submitBtn.innerHTML = "Erro";
+
+        setTimeout(() => {
+
+            submitBtn.innerHTML = "Enviar Mensagem";
+            submitBtn.disabled = false;
+
+        }, 1500);
 
     }
 
-  } catch (error) {
+});
 
-    console.error(error);
+const glow = document.getElementById("cursor-glow");
 
-    alert("Erro ao enviar formulário.");
+document.addEventListener("mousemove", (e) => {
 
-  }
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
 
 });
